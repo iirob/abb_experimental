@@ -8,24 +8,20 @@
   <arg name="paused" default="false"/>
   <arg name="use_sim_time" default="true"/>
   <arg name="gui" default="true"/>
-	 <param name="robot_description" command="$(find xacro)/xacro.py --inorder '$(find abb_irb4600_support)/urdf/irb4600_60_205.xacro'" />
-    <!-- startup simulated world -->
-	<include file="$(find gazebo_ros)/launch/empty_world.launch">
-		<arg name="world_name" value="$(arg world_name)"/>
-		<arg name="debug" value="$(arg debug)" />
-		<arg name="headless" value="$(arg headless)"/>
-		<arg name="paused" value="$(arg paused)" />
-		<arg name="use_sim_time" value="$(arg use_sim_time)" />
-		<arg name="gui" value="$(arg gui)" />
-	</include>
+  
+  <param name="robot_description" command="$(find xacro)/xacro.py --inorder '$(find abb_irb4600_support)/urdf/irb4600_60_205.xacro'" />
+  <!-- startup simulated world -->
+  <include file="$(find gazebo_ros)/launch/empty_world.launch">
+	<arg name="world_name" value="$(arg world_name)"/>
+	<arg name="debug" value="$(arg debug)" />
+	<arg name="headless" value="$(arg headless)"/>
+	<arg name="paused" value="$(arg paused)" />
+	<arg name="use_sim_time" value="$(arg use_sim_time)" />
+	<arg name="gui" value="$(arg gui)" />
+  </include>
      
   <rosparam command="load" file="$(find abb_irb4600_support)/config/joint_names_irb4600_60_205.yaml" />
   <rosparam command="load" file="$(find abb_irb4600_support)/config/hardware_controllers_config.yaml" />
-  
-  <!--<include file="$(find abb_driver)/launch/robot_interface.launch">
-    <arg name="robot_ip"    value="$(arg robot_ip)" />
-    <arg name="J23_coupled" value="$(arg J23_coupled)" />
-  </include>-->
   
   <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher"/> 
   <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" />
@@ -37,6 +33,5 @@
         
     <node name="controller_loader" pkg="controller_manager" type="controller_manager" respawn="false" output="screen"
         args="load joint_group_position_controller"/>
-
         
 </launch>
